@@ -20,16 +20,16 @@ What you need to do to put this email live. Details for each step are further do
 - [ ] *(Optional)* Host the licensed Gatore and Agrandir `.woff2` files and set `settings.font_base_url`. Skip this and the email uses fallback fonts. → [Fonts](#fonts)
 
 **2. Connect the booking data**
-- [ ] Map your booking data to the 7 `booking.*` fields. Each one is listed with its format in [Connecting the data](#connecting-the-data-for-the-developer); `data/booking.example.json` shows the exact shape.
+- [ ] Map your booking data to the 8 `booking.*` fields (7 in the email, plus `date_short` for the subject). Each one is listed with its format in [Connecting the data](#connecting-the-data-for-the-developer); `data/booking.example.json` shows the exact shape.
 - [ ] Provide the QR code as a hosted image URL, not a `data:` URI. → [QR code](#qr-code)
 - [ ] Format `booking.date` in the recipient's language before injecting it (DE `Mittwoch, 7. Oktober 2026`, EN `Wednesday, 7 October 2026`). Send `booking.keysafe_code` as a string.
 - [ ] Choose which template to send: `booking-confirmation.de.html` or `booking-confirmation.en.html` (by the customer's language, or default to `de`).
 - [ ] Inject the values with your template engine or `render.js`, HTML-escaping all of them. Look for `▼ DATA` in the templates and `▼ CONNECT YOUR DATA HERE` in `render.js`.
 
 **3. Sending**
-- [ ] Set the subject line, which isn't part of the HTML. Suggested:
-  - DE: `Deine Buchung: {{booking.date}}, {{booking.time_start}}–{{booking.time_end}}`
-  - EN: `You're booked: {{booking.date}}, {{booking.time_start}}–{{booking.time_end}}`
+- [ ] Set the subject line, which isn't part of the HTML. It uses a short date (`booking.date_short`), because phones only show the first ~40 characters:
+  - DE: `Gebucht bei Caya ✓ {{booking.date_short}}, {{booking.time_start}}` → *Gebucht bei Caya ✓ Mi, 7. Okt., 16:45*
+  - EN: `You're booked at Caya ✓ {{booking.date_short}}, {{booking.time_start}}` → *You're booked at Caya ✓ Wed 7 Oct, 16:45*
 - [ ] Send from an address that is OK to reply to, or set Reply-To to `info@cayaclimb.ch`.
 
 **4. Before going live**
@@ -71,6 +71,7 @@ Values are in two groups:
 |---|---|---|---|
 | `{{booking.first_name}}` | text | `Nicolas` | |
 | `{{booking.date}}` | text | `Mittwoch, 7. Oktober 2026` | Already formatted in the email's language (EN: `Wednesday, 7 October 2026`) |
+| `{{booking.date_short}}` | text | `Mi, 7. Okt.` | Subject line only (EN: `Wed 7 Oct`) |
 | `{{booking.time_start}}` | text | `16:45` | 24-hour clock |
 | `{{booking.time_end}}` | text | `19:45` | 24-hour clock |
 | `{{booking.keysafe_code}}` | text | `2032` | Send as a string so leading zeros survive |

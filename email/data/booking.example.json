@@ -2,6 +2,7 @@
   "booking": {
     "first_name": "Nicolas",
     "date": "Mittwoch, 7. Oktober 2026",
+    "date_short": "Mi, 7. Okt.",
     "time_start": "16:45",
     "time_end": "19:45",
     "keysafe_code": "2032",

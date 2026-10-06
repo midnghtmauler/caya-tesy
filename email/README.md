@@ -13,7 +13,7 @@ Redesign of the "Your booking is confirmed" email. The goal is that a first-time
 1. **When:** greeting plus date and time, the biggest thing on the page.
 2. **How to get in, in 2 steps.** The two steps happen at two places in order:
    - **Step 1, building entrance:** the key safe code shown large and on its own, then three short actions (take the badge, hold it to the reader, put it back).
-   - **Step 2, Caya door:** the QR code sits *inside* this step, right where it's needed, on a white tile so it still scans in dark mode.
+   - **Step 2, Caya door:** the QR code sits *inside* this step, right where it's needed, on a white tile so it always scans.
 3. **First time?** The video link as a button, not a bare URL.
 4. **Footer:** change or cancel, reply for questions, address.
 
@@ -36,24 +36,31 @@ Choices behind this:
 | `{{video_url}}` | https://youtu.be/xrKvcYTxS9w |
 | `{{manage_booking_url}}` | link to change or cancel the booking |
 | `{{address}}` | street, postcode, city |
+| `{{font_base_url}}` | URL of the folder holding the brand font files (see Fonts) |
 
 Rename these to whatever syntax your booking tool uses.
 
 ## Brand tokens
 
-Taken from cayaclimb.ch. Find and replace them in both files if they change:
+From **Brandbook CAYA v4** (the colour page is titled "Ina's Suggestion 1"). If the palette changes, find and replace these in both files:
 
 | Token | Hex | Used for |
 |---|---|---|
-| Cream | `#FDF6F0` | page, step cards |
-| Forest green | `#384A2B` | booking summary band |
-| Maroon | `#3A1424` | text, card outlines |
-| Coral | `#EE6A45` | logo, step numbers |
-| Pink | `#F6D3EE` | "booked" kicker, first-visit block |
-| Lime | `#DCEB4B` | key safe code, button |
+| Cream | `#FFF8F0` | page, step cards |
+| Green | `#2F4A24` | booking summary band |
+| Maroon | `#3D1220` | text, card outlines |
+| Orange | `#FF5714` | logo, step numbers |
+| Pink | `#FFD4EF` | "booked" kicker, first-visit block |
+| Yellow | `#FFFA70` | key safe code |
+| Lime | `#D5EF02` | button |
 
-The display font is **Rammetto One**, the closest Google Font to the site's headings. It loads in Apple Mail and iOS Mail. Gmail and Outlook fall back to Arial Black. Swap in the real font name if it's known.
+## Fonts
 
-The logo is set as text in the display font. For an exact match in every client, replace it with a hosted PNG of the wordmark (about 240px wide, shown at 120px, `alt="Caya Boardroom"`).
+The brand book sets **Gatore** for headers and **Agrandir** for main text (letter spacing 1%). Neither is a free web font, so:
+
+- Most email clients (Gmail, Outlook) don't load web fonts at all. They show the fallbacks: Rammetto One or Arial Black for headers, Helvetica or Arial for text.
+- Apple Mail and iOS Mail will show the real fonts if the licensed `.woff2` files are hosted and `{{font_base_url}}` points at them, with these files: `Gatore-Regular.woff2`, `Agrandir-Regular.woff2`, `Agrandir-Bold.woff2`. Check the font licences allow web/email use first.
+
+The logo is set as text. For an exact match everywhere, replace it with a hosted PNG of the "caya boardroom" wordmark from the brand book (about 240px wide, shown at 120px, `alt="Caya Boardroom"`).
 
 The email is fixed to light mode (`color-scheme: light only`) so the brand colours hold up. The QR code always sits on pure white.

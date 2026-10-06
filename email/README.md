@@ -11,6 +11,38 @@ Redesign of the "Your booking is confirmed" email. The goal is that a first-time
 | `data/booking.example.json` | Example data payload |
 | `assets/` | Logo file to host |
 
+## Developer checklist
+
+What you need to do to put this email live. Details for each step are further down.
+
+**1. One-time setup**
+- [ ] Upload `assets/logo-caya-boardroom@2x.png` to a public HTTPS URL and set `settings.logo_url` to it. → [Logo](#logo)
+- [ ] *(Optional)* Host the licensed Gatore and Agrandir `.woff2` files and set `settings.font_base_url`. Skip this and the email uses fallback fonts. → [Fonts](#fonts)
+
+**2. Connect the booking data**
+- [ ] Map your booking data to the 7 `booking.*` fields. Each one is listed with its format in [Connecting the data](#connecting-the-data-for-the-developer); `data/booking.example.json` shows the exact shape.
+- [ ] Provide the QR code as a hosted image URL, not a `data:` URI. → [QR code](#qr-code)
+- [ ] Format `booking.date` in the recipient's language before injecting it (DE `Mittwoch, 7. Oktober 2026`, EN `Wednesday, 7 October 2026`). Send `booking.keysafe_code` as a string.
+- [ ] Choose which template to send: `booking-confirmation.de.html` or `booking-confirmation.en.html` (by the customer's language, or default to `de`).
+- [ ] Inject the values with your template engine or `render.js`, HTML-escaping all of them. Look for `▼ DATA` in the templates and `▼ CONNECT YOUR DATA HERE` in `render.js`.
+
+**3. Sending**
+- [ ] Set the subject line, which isn't part of the HTML. Suggested:
+  - DE: `Deine Buchung: {{booking.date}}, {{booking.time_start}}–{{booking.time_end}}`
+  - EN: `You're booked: {{booking.date}}, {{booking.time_start}}–{{booking.time_end}}`
+- [ ] Send from an address that is OK to reply to, or set Reply-To to `info@cayaclimb.ch`.
+
+**4. Before going live**
+- [ ] Run `node render.js de` and `node render.js en` with real data. Both should finish without a "Missing email data" error.
+- [ ] Send test emails and check them in Gmail (Android/iOS app and web), Apple Mail on iPhone and Outlook. Make sure the QR code scans from a phone screen at the real door reader.
+- [ ] If there's no change-or-cancel link per booking, remove that line from the footer in both templates.
+
+**Still to confirm with Caya (not code tasks)**
+- [ ] Order of entry: key safe at the building first, then the QR code at the Caya door.
+- [ ] Final palette. The brand book's colour page is titled "Ina's Suggestion 1".
+- [ ] Logo colour `#FF5741` vs brand orange `#FF5714`.
+- [ ] Whether the font licences allow use in email.
+
 ## Content order
 
 1. **When:** greeting plus date and time, the biggest thing on the page.
@@ -25,7 +57,7 @@ Choices behind this:
 - Short imperative sentences, all under one line of thought.
 - The emphasis (!!!, 👀) is replaced by layout: the code is the largest text in the email.
 - The preheader shows date and time in the inbox. The door code is left out on purpose so it doesn't show on lock-screen notifications.
-- Email-safe: table layout, inline styles, 600px max width, system fonts, `prefers-color-scheme` dark mode.
+- Email-safe: table layout, inline styles, 600px max width, brand fonts with safe fallbacks, light mode only.
 
 ## Connecting the data (for the developer)
 

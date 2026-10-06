@@ -36,6 +36,7 @@ Choices behind this:
 | `{{video_url}}` | https://youtu.be/xrKvcYTxS9w |
 | `{{manage_booking_url}}` | link to change or cancel the booking |
 | `{{address}}` | street, postcode, city |
+| `{{logo_url}}` | URL of the hosted logo image (see Logo) |
 | `{{font_base_url}}` | URL of the folder holding the brand font files (see Fonts) |
 
 Rename these to whatever syntax your booking tool uses.
@@ -61,6 +62,14 @@ The brand book sets **Gatore** for headers and **Agrandir** for main text (lette
 - Most email clients (Gmail, Outlook) don't load web fonts at all. They show the fallbacks: Rammetto One or Arial Black for headers, Helvetica or Arial for text.
 - Apple Mail and iOS Mail will show the real fonts if the licensed `.woff2` files are hosted and `{{font_base_url}}` points at them, with these files: `Gatore-Regular.woff2`, `Agrandir-Regular.woff2`, `Agrandir-Bold.woff2`. Check the font licences allow web/email use first.
 
-The logo is set as text. For an exact match everywhere, replace it with a hosted PNG of the "caya boardroom" wordmark from the brand book (about 240px wide, shown at 120px, `alt="Caya Boardroom"`).
+## Logo
+
+The header logo is an `<img>` that loads from `{{logo_url}}`. The repo has a stand-in at `assets/logo-placeholder.png` (a dashed "LOGO · draft" box) to use until the real file exists.
+
+To swap in the real logo:
+- Export the "caya boardroom" wordmark from the brand book as a PNG at **280×120px** (it's shown at 140×60, so this keeps it sharp on phones). Use a transparent or cream `#FFF8F0` background.
+- Host it on a public HTTPS URL and set `{{logo_url}}` to it. Images embedded as data URIs are blocked by Gmail.
+- If the wordmark isn't 7:3, change the `width`/`height` on the `<img>` to match, keeping the width at 140.
+- If images are blocked, the alt text "Caya Boardroom" shows in orange bold text instead.
 
 The email is fixed to light mode (`color-scheme: light only`) so the brand colours hold up. The QR code always sits on pure white.

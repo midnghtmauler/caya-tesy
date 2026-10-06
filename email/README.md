@@ -6,7 +6,7 @@ Redesign of the "Your booking is confirmed" email. The goal is that a first-time
 |---|---|
 | `booking-confirmation.de.html` | German template (informal *du*) |
 | `booking-confirmation.en.html` | English template |
-| `previews/` | Phone-width renders, light + dark mode |
+| `previews/` | Phone-width renders with sample data |
 
 ## Content order
 
@@ -39,15 +39,21 @@ Choices behind this:
 
 Rename these to whatever syntax your booking tool uses.
 
-## Brand tokens (to confirm)
+## Brand tokens
 
-cayaclimb.ch couldn't be reached while this was built, so the colours are neutral placeholders. Find and replace them in both files:
+Taken from cayaclimb.ch. Find and replace them in both files if they change:
 
-| Token | Hex |
-|---|---|
-| Ink (text, button) | `#141414` |
-| Accent (step numbers) | `#FF5A1F` |
-| Page background | `#F3F1ED` |
-| Muted text | `#6B6B6B` |
+| Token | Hex | Used for |
+|---|---|---|
+| Cream | `#FDF6F0` | page, step cards |
+| Forest green | `#384A2B` | booking summary band |
+| Maroon | `#3A1424` | text, card outlines |
+| Coral | `#EE6A45` | logo, step numbers |
+| Pink | `#F6D3EE` | "booked" kicker, first-visit block |
+| Lime | `#DCEB4B` | key safe code, button |
 
-The "CAYA" text in the header can be swapped for a hosted logo `<img>` (PNG, about 120px wide, with `alt="Caya"`).
+The display font is **Rammetto One**, the closest Google Font to the site's headings. It loads in Apple Mail and iOS Mail. Gmail and Outlook fall back to Arial Black. Swap in the real font name if it's known.
+
+The logo is set as text in the display font. For an exact match in every client, replace it with a hosted PNG of the wordmark (about 240px wide, shown at 120px, `alt="Caya Boardroom"`).
+
+The email is fixed to light mode (`color-scheme: light only`) so the brand colours hold up. The QR code always sits on pure white.

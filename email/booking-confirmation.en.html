@@ -4,144 +4,142 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="x-apple-disable-message-reformatting">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark">
-<title>You're booked in at Caya</title>
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light only">
+<title>You're booked in at Caya Boardroom</title>
 <!--
-  BRAND TOKENS — find & replace these hex values to match Caya's brand:
-    #141414  ink (text, dark surfaces)
-    #FF5A1F  accent (step numbers, button)
-    #F3F1ED  page background
-    #6B6B6B  muted text
-  Placeholders ({{...}}) are filled in by the booking system — see email/README.md.
+  CAYA BRAND TOKENS (taken from cayaclimb.ch)
+    #FDF6F0  cream     page + cards
+    #384A2B  green     booking summary band
+    #3A1424  maroon    text, card outlines
+    #EE6A45  coral     logo, step numbers
+    #F6D3EE  pink      kicker on green
+    #DCEB4B  lime      key safe code, button
+  Display font: Rammetto One (loads in Apple Mail / iOS; other clients fall back to Arial Black).
+  Placeholders ({{...}}) are filled in by the booking system; see email/README.md.
 -->
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap');
+  :root { color-scheme: light only; }
   body { margin:0; padding:0; width:100% !important; -webkit-text-size-adjust:100%; }
-  table { border-collapse:collapse; }
+  table { border-collapse:separate; }
   img { border:0; display:block; }
-  a { color:inherit; }
   @media (max-width:620px) {
     .container { width:100% !important; }
-    .px { padding-left:20px !important; padding-right:20px !important; }
-    .code { font-size:44px !important; letter-spacing:10px !important; }
-  }
-  @media (prefers-color-scheme: dark) {
-    .bg { background:#0E0E0E !important; }
-    .card { background:#1C1C1C !important; }
-    .ink { color:#F5F5F5 !important; }
-    .muted { color:#A8A8A8 !important; }
-    .rule { border-color:#555555 !important; }
-    .btn { background:#F5F5F5 !important; }
-    .btn a { color:#141414 !important; }
+    .px { padding-left:22px !important; padding-right:22px !important; }
+    .h1 { font-size:28px !important; }
+    .code { font-size:46px !important; letter-spacing:10px !important; }
   }
 </style>
 </head>
-<body class="bg" style="margin:0; padding:0; background:#F3F1ED;">
+<body style="margin:0; padding:0; background:#FDF6F0;">
 
-<!-- Preheader: shown next to the subject line in the inbox -->
+<!-- Preheader: shown next to the subject line in the inbox. The door code is left out on purpose (lock screens). -->
 <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
   {{date}}, {{time_start}}–{{time_end}} · How to get in: 2 steps inside.
   &#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;
 </div>
 
-<table role="presentation" width="100%" class="bg" style="background:#F3F1ED;">
-<tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FDF6F0;">
+<tr><td align="center" style="padding:20px 12px 32px;">
 
-<table role="presentation" width="600" class="container" style="width:600px; max-width:600px; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" class="container" style="width:600px; max-width:600px; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; color:#3A1424;">
 
-  <!-- Logo -->
-  <tr><td class="px" style="padding:8px 32px 20px;">
-    <a href="https://cayaclimb.ch" style="text-decoration:none;">
-      <span class="ink" style="font-size:22px; font-weight:800; letter-spacing:4px; color:#141414;">CAYA</span>
+  <!-- Logo (swap for a hosted PNG of the wordmark for pixel-perfect branding in every client) -->
+  <tr><td class="px" style="padding:4px 28px 20px;">
+    <a href="https://cayaclimb.ch" style="text-decoration:none; color:#EE6A45;">
+      <span style="display:block; font-family:'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:40px; line-height:0.95; font-weight:900; color:#EE6A45;">caya</span>
+      <span style="display:block; font-family:'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:17px; line-height:1.2; font-weight:900; color:#EE6A45;">boardroom</span>
     </a>
   </td></tr>
 
   <!-- 1. Booking summary -->
-  <tr><td class="card px" style="background:#FFFFFF; border-radius:16px; padding:32px;">
-    <p class="muted" style="margin:0 0 6px; font-size:15px; color:#6B6B6B;">Hi {{first_name}}, you're booked in ✓</p>
-    <h1 class="ink" style="margin:0; font-size:30px; line-height:1.2; font-weight:800; color:#141414;">{{date}}</h1>
-    <p class="ink" style="margin:4px 0 0; font-size:22px; line-height:1.3; font-weight:600; color:#141414;">{{time_start}} – {{time_end}}</p>
+  <tr><td class="px" style="background:#384A2B; border-radius:28px; padding:30px 28px;">
+    <p style="margin:0 0 10px; font-family:'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:18px; color:#F6D3EE;">You're booked in!</p>
+    <h1 class="h1" style="margin:0; font-family:'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:32px; line-height:1.15; font-weight:900; color:#FDF6F0;">{{date}}</h1>
+    <p style="margin:6px 0 0; font-size:24px; line-height:1.3; font-weight:700; color:#FDF6F0;">{{time_start}} – {{time_end}}</p>
+    <p style="margin:14px 0 0; font-size:15px; line-height:1.5; color:#FDF6F0; opacity:0.85;">Hi {{first_name}}, see you on the boards.</p>
   </td></tr>
 
-  <tr><td style="height:28px;"></td></tr>
+  <tr><td style="height:30px; line-height:30px;">&nbsp;</td></tr>
 
   <!-- Section heading -->
-  <tr><td class="px" style="padding:0 32px 12px;">
-    <h2 class="ink" style="margin:0; font-size:20px; font-weight:800; color:#141414;">How to get in — 2 steps</h2>
+  <tr><td class="px" style="padding:0 28px 14px;">
+    <h2 style="margin:0; font-family:'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:22px; line-height:1.2; color:#3A1424;">How to get in: 2&nbsp;steps</h2>
   </td></tr>
 
   <!-- 2. Step 1: building entrance / key safe -->
-  <tr><td class="card px" style="background:#FFFFFF; border-radius:16px; padding:28px 32px;">
-    <table role="presentation" width="100%"><tr>
-      <td width="40" valign="top">
-        <div style="width:32px; height:32px; line-height:32px; border-radius:16px; background:#FF5A1F; color:#FFFFFF; font-weight:800; font-size:16px; text-align:center;">1</div>
+  <tr><td class="px" style="background:#FDF6F0; border:1.5px solid #3A1424; border-radius:28px; padding:26px 28px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+      <td width="46" valign="top">
+        <div style="width:34px; height:34px; line-height:34px; border-radius:17px; background:#EE6A45; color:#FDF6F0; font-family:'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:16px; text-align:center;">1</div>
       </td>
       <td valign="top">
-        <p class="muted" style="margin:0; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#6B6B6B;">At the building entrance</p>
-        <h3 class="ink" style="margin:4px 0 0; font-size:20px; font-weight:800; color:#141414;">Open the key safe</h3>
+        <p style="margin:0; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#3A1424; opacity:0.7;">At the building entrance</p>
+        <h3 style="margin:4px 0 0; font-family:'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:20px; line-height:1.2; color:#3A1424;">Open the key safe</h3>
       </td>
     </tr></table>
 
     <!-- The code, big and alone -->
-    <table role="presentation" width="100%" style="margin:20px 0;"><tr>
-      <td align="center" class="rule" style="border:2px solid #141414; border-radius:12px; padding:18px 8px;">
-        <p class="muted" style="margin:0 0 4px; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#6B6B6B;">Key safe code</p>
-        <p class="code ink" style="margin:0; font-family:'SF Mono', Menlo, Consolas, monospace; font-size:52px; line-height:1.1; font-weight:800; letter-spacing:14px; color:#141414;">{{keysafe_code}}</p>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:22px 0;"><tr>
+      <td align="center" style="background:#DCEB4B; border-radius:20px; padding:18px 8px;">
+        <p style="margin:0 0 2px; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#3A1424;">Key safe code</p>
+        <p class="code" style="margin:0; font-family:'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:54px; line-height:1.15; letter-spacing:14px; color:#3A1424;">{{keysafe_code}}</p>
       </td>
     </tr></table>
 
-    <table role="presentation" width="100%" class="ink" style="font-size:16px; line-height:1.5; color:#141414;">
-      <tr><td width="28" valign="top" style="padding:0 0 10px; font-weight:800;">a.</td><td style="padding:0 0 10px;">Enter the code and take out the <strong>badge</strong>.</td></tr>
-      <tr><td width="28" valign="top" style="padding:0 0 10px; font-weight:800;">b.</td><td style="padding:0 0 10px;">Hold the badge to the door reader. The door opens.</td></tr>
-      <tr><td width="28" valign="top" style="font-weight:800;">c.</td><td><strong>Put the badge back</strong> and close the key safe.</td></tr>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:17px; line-height:1.5; color:#3A1424;">
+      <tr><td width="28" valign="top" style="padding:0 0 10px; font-weight:700;">a.</td><td style="padding:0 0 10px;">Enter the code and take out the <strong>badge</strong>.</td></tr>
+      <tr><td width="28" valign="top" style="padding:0 0 10px; font-weight:700;">b.</td><td style="padding:0 0 10px;">Hold the badge to the door reader. The door opens.</td></tr>
+      <tr><td width="28" valign="top" style="font-weight:700;">c.</td><td><strong>Put the badge back</strong> and close the key safe.</td></tr>
     </table>
   </td></tr>
 
-  <tr><td style="height:12px;"></td></tr>
+  <tr><td style="height:14px; line-height:14px;">&nbsp;</td></tr>
 
   <!-- 3. Step 2: Caya door / QR code -->
-  <tr><td class="card px" style="background:#FFFFFF; border-radius:16px; padding:28px 32px;">
-    <table role="presentation" width="100%"><tr>
-      <td width="40" valign="top">
-        <div style="width:32px; height:32px; line-height:32px; border-radius:16px; background:#FF5A1F; color:#FFFFFF; font-weight:800; font-size:16px; text-align:center;">2</div>
+  <tr><td class="px" style="background:#FDF6F0; border:1.5px solid #3A1424; border-radius:28px; padding:26px 28px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+      <td width="46" valign="top">
+        <div style="width:34px; height:34px; line-height:34px; border-radius:17px; background:#EE6A45; color:#FDF6F0; font-family:'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:16px; text-align:center;">2</div>
       </td>
       <td valign="top">
-        <p class="muted" style="margin:0; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#6B6B6B;">At the Caya door</p>
-        <h3 class="ink" style="margin:4px 0 0; font-size:20px; font-weight:800; color:#141414;">Scan this QR code</h3>
+        <p style="margin:0; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#3A1424; opacity:0.7;">At the Caya door</p>
+        <h3 style="margin:4px 0 0; font-family:'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:20px; line-height:1.2; color:#3A1424;">Scan this QR code</h3>
       </td>
     </tr></table>
 
-    <p class="ink" style="margin:16px 0 20px; font-size:16px; line-height:1.5; color:#141414;">Hold your phone under the reader, screen facing up. The door unlocks.</p>
+    <p style="margin:18px 0 20px; font-size:17px; line-height:1.5; color:#3A1424;">Hold your phone under the reader, screen facing up. The door unlocks.</p>
 
-    <!-- QR stays on white in dark mode so it always scans -->
-    <table role="presentation" align="center" style="margin:0 auto;"><tr>
-      <td style="background:#FFFFFF; border:1px solid #E2E2E2; border-radius:12px; padding:16px;">
+    <!-- QR stays on pure white so it always scans -->
+    <table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:0 auto;"><tr>
+      <td style="background:#FFFFFF; border:1.5px solid #3A1424; border-radius:20px; padding:18px;">
         <img src="{{qr_code_url}}" width="220" height="220" alt="Your personal entry QR code" style="width:220px; height:220px;">
       </td>
     </tr></table>
 
-    <p class="muted" style="margin:16px 0 0; font-size:14px; line-height:1.5; text-align:center; color:#6B6B6B;">Tip: turn your screen brightness up.</p>
+    <p style="margin:16px 0 0; font-size:14px; line-height:1.5; text-align:center; color:#3A1424; opacity:0.7;">Tip: turn your screen brightness up.</p>
   </td></tr>
 
-  <tr><td style="height:28px;"></td></tr>
+  <tr><td style="height:30px; line-height:30px;">&nbsp;</td></tr>
 
   <!-- 4. First visit -->
-  <tr><td class="px" style="padding:0 32px;">
-    <h2 class="ink" style="margin:0 0 6px; font-size:18px; font-weight:800; color:#141414;">First time at Caya?</h2>
-    <p class="muted" style="margin:0 0 16px; font-size:16px; line-height:1.5; color:#6B6B6B;">Watch the short video: how to find us and the house rules.</p>
-    <table role="presentation"><tr>
-      <td class="btn" style="background:#141414; border-radius:999px;">
-        <a href="{{video_url}}" style="display:inline-block; padding:14px 26px; font-size:16px; font-weight:700; color:#FFFFFF; text-decoration:none;">▶&nbsp; Watch the video</a>
+  <tr><td class="px" style="background:#F6D3EE; border-radius:28px; padding:26px 28px;">
+    <h2 style="margin:0 0 6px; font-family:'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:19px; line-height:1.25; color:#3A1424;">First time at Caya?</h2>
+    <p style="margin:0 0 18px; font-size:17px; line-height:1.5; color:#3A1424;">Watch the short video: how to find us and the house rules.</p>
+    <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+      <td style="background:#DCEB4B; border-radius:999px;">
+        <a href="{{video_url}}" style="display:inline-block; padding:15px 28px; font-size:17px; font-weight:700; color:#3A1424; text-decoration:none;">▶&nbsp; Watch the video</a>
       </td>
     </tr></table>
   </td></tr>
 
   <!-- Footer -->
-  <tr><td class="px" style="padding:36px 32px 8px;">
-    <p class="muted rule" style="margin:0; padding-top:20px; border-top:1px solid #DCD9D3; font-size:13px; line-height:1.6; color:#6B6B6B;">
-      Can't make it? <a href="{{manage_booking_url}}" style="color:#6B6B6B; text-decoration:underline;">Change or cancel your booking</a><br>
+  <tr><td class="px" style="padding:30px 28px 0;">
+    <p style="margin:0; font-size:14px; line-height:1.7; color:#3A1424; opacity:0.75;">
+      Can't make it? <a href="{{manage_booking_url}}" style="color:#3A1424; text-decoration:underline;">Change or cancel your booking</a><br>
       Questions? Just reply to this email.<br>
-      Caya · {{address}} · <a href="https://cayaclimb.ch" style="color:#6B6B6B;">cayaclimb.ch</a>
+      Caya Boardroom · {{address}} · <a href="https://cayaclimb.ch" style="color:#3A1424;">cayaclimb.ch</a>
     </p>
   </td></tr>
 

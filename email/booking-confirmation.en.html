@@ -1,6 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<!--
+  ════════════════════════════════════════════════════════════════════
+  DEVELOPER: DATA TO INJECT
+  ════════════════════════════════════════════════════════════════════
+  Each value below appears in the HTML as a placeholder in double curly
+  braces, e.g. booking.date is written { {booking.date} } without the spaces.
+  A "▼ DATA" comment sits right above every spot. Search for "▼ DATA".
+
+  booking.*   changes for EVERY email (comes from the booking system)
+    booking.first_name     text   "Nicolas"
+    booking.date           text   already formatted in this email's language
+                                  DE "Mittwoch, 7. Oktober 2026"
+                                  EN "Wednesday, 7 October 2026"
+    booking.time_start     text   "16:45"  (24h)
+    booking.time_end       text   "19:45"  (24h)
+    booking.keysafe_code   text   "2032"   (send as a string to keep leading zeros)
+    booking.qr_code_url    URL    public HTTPS URL of this booking's QR image, PNG, at least 440x440px
+    booking.manage_url     URL    link to change or cancel this booking
+
+  settings.*  set ONCE per deployment
+    settings.logo_url       URL   hosted copy of assets/logo-caya-boardroom@2x.png
+    settings.font_base_url  URL   folder with the licensed brand .woff2 fonts (optional)
+
+  Example payload:     data/booking.example.json
+  Reference injector:  render.js  (HTML-escapes values, fails on a missing field)
+  ════════════════════════════════════════════════════════════════════
+-->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="x-apple-disable-message-reformatting">
@@ -17,16 +44,15 @@
     #FFFA70  yellow    key safe code
     #D5EF02  lime      button
   Fonts: Gatore (headers), Agrandir (main text). They only show where the
-  email client loads web fonts AND {{font_base_url}} serves the licensed
+  email client loads web fonts AND settings.font_base_url serves the licensed
   .woff2 files; otherwise the fallbacks in each font-family stack are used.
-  Placeholders ({{...}}) are filled in by the booking system; see email/README.md.
 -->
 <style>
   /* Fallback for Gatore where the brand fonts can't load */
   @import url('https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap');
-  @font-face { font-family:'Gatore'; font-weight:400; src:local('Gatore'), local('Gatore-Regular'), url('{{font_base_url}}/Gatore-Regular.woff2') format('woff2'); }
-  @font-face { font-family:'Agrandir'; font-weight:400; src:local('Agrandir'), local('Agrandir-Regular'), url('{{font_base_url}}/Agrandir-Regular.woff2') format('woff2'); }
-  @font-face { font-family:'Agrandir'; font-weight:700; src:local('Agrandir Bold'), local('Agrandir-Bold'), url('{{font_base_url}}/Agrandir-Bold.woff2') format('woff2'); }
+  @font-face { font-family:'Gatore'; font-weight:400; src:local('Gatore'), local('Gatore-Regular'), url('{{settings.font_base_url}}/Gatore-Regular.woff2') format('woff2'); }
+  @font-face { font-family:'Agrandir'; font-weight:400; src:local('Agrandir'), local('Agrandir-Regular'), url('{{settings.font_base_url}}/Agrandir-Regular.woff2') format('woff2'); }
+  @font-face { font-family:'Agrandir'; font-weight:700; src:local('Agrandir Bold'), local('Agrandir-Bold'), url('{{settings.font_base_url}}/Agrandir-Bold.woff2') format('woff2'); }
   :root { color-scheme: light only; }
   body { margin:0; padding:0; width:100% !important; -webkit-text-size-adjust:100%; }
   table { border-collapse:separate; }
@@ -42,8 +68,9 @@
 <body style="margin:0; padding:0; background:#FFF8F0;">
 
 <!-- Preheader: shown next to the subject line in the inbox. The door code is left out on purpose (lock screens). -->
+<!-- ▼ DATA: booking.date, booking.time_start, booking.time_end (inbox preview text) -->
 <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
-  {{date}}, {{time_start}}–{{time_end}} · How to get in: 2 steps inside.
+  {{booking.date}}, {{booking.time_start}}–{{booking.time_end}} · How to get in: 2 steps inside.
   &#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;
 </div>
 
@@ -52,19 +79,23 @@
 
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" class="container" style="width:600px; max-width:600px; font-family:'Agrandir', 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing:0.01em; color:#3D1220;">
 
-  <!-- LOGO: upload assets/logo-caya-boardroom@2x.png (320×114, shown at 160×57) and set {{logo_url}} to its public HTTPS URL. -->
+  <!-- LOGO: host assets/logo-caya-boardroom@2x.png (320×114, shown at 160×57) -->
   <tr><td class="px" style="padding:4px 28px 20px;">
     <a href="https://cayaclimb.ch" style="text-decoration:none;">
-      <img src="{{logo_url}}" width="160" height="57" alt="Caya Boardroom" style="display:block; width:160px; height:57px; border:0; font-family:'Gatore', 'Arial Black', Arial, sans-serif; font-size:24px; font-weight:900; line-height:57px; color:#FF5741;">
+      <!-- ▼ DATA: settings.logo_url -->
+      <img src="{{settings.logo_url}}" width="160" height="57" alt="Caya Boardroom" style="display:block; width:160px; height:57px; border:0; font-family:'Gatore', 'Arial Black', Arial, sans-serif; font-size:24px; font-weight:900; line-height:57px; color:#FF5741;">
     </a>
   </td></tr>
 
   <!-- 1. Booking summary -->
   <tr><td class="px" style="background:#2F4A24; border-radius:28px; padding:30px 28px;">
     <p style="margin:0 0 10px; font-family:'Gatore', 'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:18px; color:#FFD4EF;">You're booked in!</p>
-    <h1 class="h1" style="margin:0; font-family:'Gatore', 'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:32px; line-height:1.15; font-weight:900; color:#FFF8F0;">{{date}}</h1>
-    <p style="margin:6px 0 0; font-size:24px; line-height:1.3; font-weight:700; color:#FFF8F0;">{{time_start}} – {{time_end}}</p>
-    <p style="margin:14px 0 0; font-size:15px; line-height:1.5; color:#FFF8F0; opacity:0.85;">Hi {{first_name}}, see you on the boards.</p>
+    <!-- ▼ DATA: booking.date -->
+    <h1 class="h1" style="margin:0; font-family:'Gatore', 'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:32px; line-height:1.15; font-weight:900; color:#FFF8F0;">{{booking.date}}</h1>
+    <!-- ▼ DATA: booking.time_start, booking.time_end -->
+    <p style="margin:6px 0 0; font-size:24px; line-height:1.3; font-weight:700; color:#FFF8F0;">{{booking.time_start}} – {{booking.time_end}}</p>
+    <!-- ▼ DATA: booking.first_name -->
+    <p style="margin:14px 0 0; font-size:15px; line-height:1.5; color:#FFF8F0; opacity:0.85;">Hi {{booking.first_name}}, see you on the boards.</p>
   </td></tr>
 
   <tr><td style="height:30px; line-height:30px;">&nbsp;</td></tr>
@@ -81,7 +112,7 @@
         <div style="width:34px; height:34px; line-height:34px; border-radius:17px; background:#FF5714; color:#FFF8F0; font-family:'Gatore', 'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:16px; text-align:center;">1</div>
       </td>
       <td valign="top">
-        <p style="margin:0; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#3D1220; opacity:0.7;">At the building entrance</p>
+        <p style="margin:0; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#3D1220; opacity:0.7;">At the building entrance · Postpassage 11</p>
         <h3 style="margin:4px 0 0; font-family:'Gatore', 'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:20px; line-height:1.2; color:#3D1220;">Open the key safe</h3>
       </td>
     </tr></table>
@@ -90,7 +121,8 @@
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:22px 0;"><tr>
       <td align="center" style="background:#FFFA70; border-radius:20px; padding:18px 8px;">
         <p style="margin:0 0 2px; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#3D1220;">Key safe code</p>
-        <p class="code" style="margin:0; font-family:'Gatore', 'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:54px; line-height:1.15; letter-spacing:14px; color:#3D1220;">{{keysafe_code}}</p>
+        <!-- ▼ DATA: booking.keysafe_code -->
+        <p class="code" style="margin:0; font-family:'Gatore', 'Rammetto One', 'Arial Black', Arial, sans-serif; font-size:54px; line-height:1.15; letter-spacing:14px; color:#3D1220;">{{booking.keysafe_code}}</p>
       </td>
     </tr></table>
 
@@ -115,12 +147,13 @@
       </td>
     </tr></table>
 
-    <p style="margin:18px 0 20px; font-size:17px; line-height:1.5; color:#3D1220;">Hold your phone under the reader, screen facing up. The door unlocks.</p>
+    <p style="margin:18px 0 20px; font-size:17px; line-height:1.5; color:#3D1220;">Inside, follow the signs to Caya. Hold your phone under the reader, screen facing up. The door unlocks.</p>
 
     <!-- QR stays on pure white so it always scans -->
     <table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:0 auto;"><tr>
       <td style="background:#FFFFFF; border:1.5px solid #3D1220; border-radius:20px; padding:18px;">
-        <img src="{{qr_code_url}}" width="220" height="220" alt="Your personal entry QR code" style="width:220px; height:220px;">
+        <!-- ▼ DATA: booking.qr_code_url -->
+        <img src="{{booking.qr_code_url}}" width="220" height="220" alt="Your personal entry QR code" style="width:220px; height:220px;">
       </td>
     </tr></table>
 
@@ -135,17 +168,18 @@
     <p style="margin:0 0 18px; font-size:17px; line-height:1.5; color:#3D1220;">Watch the short video: how to find us and the house rules.</p>
     <table role="presentation" cellpadding="0" cellspacing="0"><tr>
       <td style="background:#D5EF02; border-radius:999px;">
-        <a href="{{video_url}}" style="display:inline-block; padding:15px 28px; font-size:17px; font-weight:700; color:#3D1220; text-decoration:none;">▶&nbsp; Watch the video</a>
+        <a href="https://youtu.be/xrKvcYTxS9w" style="display:inline-block; padding:15px 28px; font-size:17px; font-weight:700; color:#3D1220; text-decoration:none;">▶&nbsp; Watch the video</a>
       </td>
     </tr></table>
   </td></tr>
 
   <!-- Footer -->
   <tr><td class="px" style="padding:30px 28px 0;">
+    <!-- ▼ DATA: booking.manage_url -->
     <p style="margin:0; font-size:14px; line-height:1.7; color:#3D1220; opacity:0.75;">
-      Can't make it? <a href="{{manage_booking_url}}" style="color:#3D1220; text-decoration:underline;">Change or cancel your booking</a><br>
-      Questions? Just reply to this email.<br>
-      Caya Boardroom · {{address}} · <a href="https://cayaclimb.ch" style="color:#3D1220;">cayaclimb.ch</a>
+      Can't make it? <a href="{{booking.manage_url}}" style="color:#3D1220; text-decoration:underline;">Change or cancel your booking</a><br>
+      Questions? <a href="mailto:info@cayaclimb.ch" style="color:#3D1220;">info@cayaclimb.ch</a> · <a href="tel:+41784528377" style="color:#3D1220;">+41 78 452 83 77</a><br>
+      Caya Boardroom · <a href="https://maps.google.com/?q=Postpassage+11,+4052+Basel" style="color:#3D1220;">Postpassage 11, 4052 Basel</a> · <a href="https://cayaclimb.ch" style="color:#3D1220;">cayaclimb.ch</a>
     </p>
   </td></tr>
 

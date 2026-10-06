@@ -1,0 +1,15 @@
+{
+  "booking": {
+    "first_name": "Nicolas",
+    "date": "Mittwoch, 7. Oktober 2026",
+    "time_start": "16:45",
+    "time_end": "19:45",
+    "keysafe_code": "2032",
+    "qr_code_url": "https://example.com/qr/booking-12345.png",
+    "manage_url": "https://example.com/bookings/12345"
+  },
+  "settings": {
+    "logo_url": "https://example.com/email/logo-caya-boardroom@2x.png",
+    "font_base_url": "https://example.com/email/fonts"
+  }
+}

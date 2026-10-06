@@ -36,7 +36,7 @@ Choices behind this:
 | `{{video_url}}` | https://youtu.be/xrKvcYTxS9w |
 | `{{manage_booking_url}}` | link to change or cancel the booking |
 | `{{address}}` | street, postcode, city |
-| `{{logo_url}}` | URL of the hosted logo image (see Logo) |
+| `{{logo_url}}` | public URL of `assets/logo-caya-boardroom@2x.png` (see Logo) |
 | `{{font_base_url}}` | URL of the folder holding the brand font files (see Fonts) |
 
 Rename these to whatever syntax your booking tool uses.
@@ -64,12 +64,10 @@ The brand book sets **Gatore** for headers and **Agrandir** for main text (lette
 
 ## Logo
 
-The header logo is an `<img>` that loads from `{{logo_url}}`. The repo has a stand-in at `assets/logo-placeholder.png` (a dashed "LOGO · draft" box) to use until the real file exists.
+The header logo is an `<img>` that loads from `{{logo_url}}`. Upload **`assets/logo-caya-boardroom@2x.png`** to a public HTTPS URL and set `{{logo_url}}` to it. Gmail blocks images embedded as data URIs.
 
-To swap in the real logo:
-- Export the "caya boardroom" wordmark from the brand book as a PNG at **280×120px** (it's shown at 140×60, so this keeps it sharp on phones). Use a transparent or cream `#FFF8F0` background.
-- Host it on a public HTTPS URL and set `{{logo_url}}` to it. Images embedded as data URIs are blocked by Gmail.
-- If the wordmark isn't 7:3, change the `width`/`height` on the `<img>` to match, keeping the width at 140.
-- If images are blocked, the alt text "Caya Boardroom" shows in orange bold text instead.
+- **File:** 320×114px PNG, 2.9 KB, transparent background. It's shown at 160×57, so it stays sharp on high-resolution phone screens. The supplied original was 1393×498 and 225 KB.
+- **Colour:** kept exactly as supplied, `#FF5741`. This is a bit pinker than the brand book's orange, `#FF5714`, which the step numbers use.
+- **If images are blocked:** the alt text "Caya Boardroom" shows in bold logo-orange instead.
 
 The email is fixed to light mode (`color-scheme: light only`) so the brand colours hold up. The QR code always sits on pure white.
